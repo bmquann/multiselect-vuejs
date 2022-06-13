@@ -8,13 +8,14 @@
         <div class="select__options" v-if="showOption">
           <div class="select__group">
             <slot name="option"></slot>
-          </div>  
-           <div class="select__btn">
-            <button :class="{active : selected}" class="btn btn-ok">Đồng ý</button>
+          </div>
+          <div class="select__btn">
+            <button :class="{ active: selected }" class="btn btn-ok">
+              Đồng ý
+            </button>
             <button class="btn btn-cancel">Hủy</button>
           </div>
         </div>
-       
       </transition>
     </div>
 
@@ -113,49 +114,48 @@ export default {
   padding: 12px 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
-
 }
 
 .select__group {
-    overflow-y: auto;
-    height:290px
+  overflow-y: auto;
+  height: 290px;
 }
 
 .select__group::-webkit-scrollbar {
   width: 8px;
   height: 62px;
   background: transparent;
-border-radius: 6px;
+  border-radius: 6px;
 }
 .select__group::-webkit-scrollbar-thumb {
-  background: #DCDCDC;
+  background: #dcdcdc;
 }
 
-.select__btn{
+.select__btn {
   width: 100%;
   margin: 16px;
 }
 
-.select__btn .btn{
+.select__btn .btn {
   padding: 4px 19px;
   margin: 3px 16px;
   font-size: 16px;
   border-radius: 4px;
-  border: none
+  border: none;
 }
 
-.select__btn .btn-ok{
-    background: #DCDCDC;
-    color: white;
+.select__btn .btn-ok {
+  background: #dcdcdc;
+  color: white;
 }
 
-.active{
-    background: #007BC3 !important;
+.active {
+  background: #007bc3 !important;
 }
 
-.select__btn .btn-cancel{
-    background: transparent;
-    color: #007BC3;
+.select__btn .btn-cancel {
+  background: transparent;
+  color: #007bc3;
 }
 .select__error {
   color: #aa4651;

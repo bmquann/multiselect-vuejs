@@ -9,7 +9,6 @@
         @selectClick="handleSelected"
       ></MultiSelectOption>
     </MultiSelectSelect>
-
   </div>
 </template>
 
@@ -24,12 +23,13 @@ export default {
   },
   data() {
     return {
-      selected: null,
+      selected: [],
     };
   },
   computed: {
     ...mapState({
       data: (state) => state.data,
+      // selected : (state) => state.selected
     }),
   },
   created() {
@@ -39,13 +39,21 @@ export default {
   watch: {},
   methods: {
     handleSelected(value) {
-      this.selected = value.name;
+      console.log(value.name);
+      // this.$store.commit('UPDATE_SELECTED_DATA',value.name)
+                 var index =  this.selected.indexOf(value.name)
+            if (index === -1) {
+                this.selected.push(value.name)
+            }else{
+                this.selected = this.selected.filter(item => item != value.name)
+            }
+      console.log(this.selected);
     },
   },
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .mutilSelect {
   margin: auto;
   width: 480px;

@@ -1,16 +1,33 @@
 <template>
   <label class="container">
-    <div for="item" class="option__item" @click="$emit('selectClick', item)">
-      <input type="checkbox" />
+    <div for="item" class="option__item" >
+      <input type="checkbox" v-model="selected" :value=item.name>
       <span class="checkmark"></span>
-      {{ item.name }} <slot></slot></div
-  ></label>
+      {{ item.name }}<slot></slot>
+    </div>
+  </label>
 </template>
 
 <script>
 export default {
-  props: ["item"],
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    selected: {
+      get() {
+      return this.$store.state.selected 
+      },
+      set(){
+         this.$store.commit('UPDATE_SELECTED_DATA', this.item.name)
+      }
+    }
+  },
 };
+
 </script>
 
 <style scoped>
@@ -19,15 +36,18 @@ export default {
   background-color: #fff;
   transition: background-color 0.2s ease-in;
   font-size: 16px;
-    margin-left: 20px;
+  margin-left: 20px;
 }
+
 .option__item:hover {
   background-color: #ccc;
 }
+
 .input[type="checkbox"] {
   width: 16px !important;
   height: 16px !important;
 }
+
 .checkmark {
   position: absolute;
   top: 25%;
@@ -37,6 +57,7 @@ export default {
   background-color: #eee;
 
 }
+
 input {
   position: absolute;
   opacity: 0;
@@ -44,20 +65,25 @@ input {
   height: 0;
   width: 0;
 }
-.container:hover input ~ .checkmark {
+
+.container:hover input~.checkmark {
   background-color: #ccc;
 }
-.container input:checked ~ .checkmark {
+
+.container input:checked~.checkmark {
   background-color: #2196F3;
 }
+
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-.container input:checked ~ .checkmark:after {
+
+.container input:checked~.checkmark:after {
   display: block;
 }
+
 .container .checkmark:after {
   left: 5px;
   top: 0px;
@@ -69,6 +95,7 @@ input {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
 .container {
   display: block;
   position: relative;

@@ -12,7 +12,7 @@ const BASE_API_URL = 'https://provinces.open-api.vn/api/'
 export default new Vuex.Store({
     state: {
         data: [ ],
-        selected: ['Tỉnh Hà Giang']
+        selected: []
     },
     mutations: {
         SET_DATA(state, data) {
@@ -20,13 +20,15 @@ export default new Vuex.Store({
         },
         UPDATE_SELECTED_DATA(state, selected){
             var index =  state.selected.indexOf(selected)
-            console.log(index)
-            if (index === -1) {
-                state.selected.push(selected)
-            }else{
+            if (index === -1)
+                state.selected.push(selected);
+            else {
                 state.selected = state.selected.filter(item => item != selected)
             }
         },
+        RESET_SELECTED(state){
+            state.selected = []
+        }
     },
     actions: {
         getData({ commit }) {
@@ -35,12 +37,8 @@ export default new Vuex.Store({
                     commit('SET_DATA', response.data)
                 })
         },
-        // updateSelected(commit,data){
-            
-        // }
     },
     getters: {
-        cities: (state) => state.data.name,
-        // city_id: (state) => state.posts.needed_data.data_req_1,
+        selected: (state) => state.selected
     }
 });

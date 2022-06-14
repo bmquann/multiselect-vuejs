@@ -6,7 +6,6 @@
         v-for="(item, index) in data"
         :key="index"
         :item="item"
-        @selectClick="handleSelected"
       ></MultiSelectOption>
     </MultiSelectSelect>
   </div>
@@ -23,33 +22,18 @@ export default {
   },
   data() {
     return {
-      selected: [],
     };
   },
   computed: {
     ...mapState({
       data: (state) => state.data,
-      // selected : (state) => state.selected
+      selected : (state) => state.selected
     }),
   },
   created() {
     this.$store.dispatch("getData");
   },
 
-  watch: {},
-  methods: {
-    handleSelected(value) {
-      console.log(value.name);
-      // this.$store.commit('UPDATE_SELECTED_DATA',value.name)
-                 var index =  this.selected.indexOf(value.name)
-            if (index === -1) {
-                this.selected.push(value.name)
-            }else{
-                this.selected = this.selected.filter(item => item != value.name)
-            }
-      console.log(this.selected);
-    },
-  },
 };
 </script>
 

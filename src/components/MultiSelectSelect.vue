@@ -1,30 +1,38 @@
 <template>
   <div class="select">
     <div class="select__wrap" :class="{ error: isError }">
-      <span class="select__title" @click="showOption = !showOption">{{
-        !selected ? "Chọn tỉnh thành" : selected
+      <span class="select__title" @click="showOption = !showOption">{{"Chọn tỉnh thành"
       }}</span>
       <transition name="fade">
-        <div class="select__options" v-if="showOption">
+        <div class="select__options" v-show="showOption">
           <div class="select__group">
             <slot name="option"></slot>
           </div>
           <div class="select__btn">
-            <button :class="{ active: selected }" class="btn btn-ok">
+            <button @click="showOption = !showOption" :class="{ active: selected }" class="btn btn-ok">
               Đồng ý
             </button>
-            <button class="btn btn-cancel">Hủy</button>
+            <button @click="handleCancel" class="btn btn-cancel">Hủy</button>
           </div>
         </div>
       </transition>
+     
     </div>
+      
 
     <p class="select__error">{{ errorMessage }}</p>
+
+    <MultiSelectResult v-show="!showOption" :selected="selected"></MultiSelectResult>
   </div>
 </template>
 
 <script>
+import MultiSelectResult from './MultiSelectResult.vue'
 export default {
+  components: {
+    MultiSelectResult,
+
+  },
   data() {
     return {
       showOption: false,
@@ -38,9 +46,6 @@ export default {
     },
   },
   watch: {
-    selected() {
-      //   this.showOption = !this.showOption;
-    },
     validFeild() {
       if (!this.validFeild) {
         if (!this.selected) {
@@ -61,6 +66,10 @@ export default {
       } else {
         this.errorMessage = "";
       }
+    },
+    handleCancel(){
+      this.$store.commit('RESET_SELECTED');
+      this.showOption = !this.showOption
     },
   },
 };
@@ -102,7 +111,7 @@ export default {
   display: block;
   width: 100%;
   height: 100%;
-  padding: 10px 12px;
+  padding: 12px 12px;
 }
 
 .select__options {
@@ -123,7 +132,7 @@ export default {
 
 .select__group::-webkit-scrollbar {
   width: 8px;
-  height: 62px;
+  height: 62px; 
   background: transparent;
   border-radius: 6px;
 }
@@ -147,6 +156,8 @@ export default {
 .select__btn .btn-ok {
   background: #dcdcdc;
   color: white;
+    cursor: pointer;
+  transition: all 0.5s
 }
 
 .active {
@@ -156,6 +167,13 @@ export default {
 .select__btn .btn-cancel {
   background: transparent;
   color: #007bc3;
+  cursor: pointer;
+  transition: all 0.5s
+}
+
+.select__btn .btn-cancel:hover{
+  background: #dcdcdc;
+
 }
 .select__error {
   color: #aa4651;
